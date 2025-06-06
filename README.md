@@ -1,101 +1,119 @@
-# Apple Entertainment Offer Code Extractor
+# Apple Entertainment Codes Generator
 
-This Python application automates the process of extracting Apple Entertainment offer codes from the Apple Card promotion page.
+This application automatically generates and manages Apple Entertainment offer codes from the Apple Card promotion page. It includes a background key generator service and a Telegram bot interface.
 
 ## Features
 
-- Navigates to the Apple Entertainment offer page
-- Clicks on redemption buttons
-- Extracts and saves redemption codes
-- Supports headless operation on Linux/AWS
-- Docker support for easy deployment
+- **Background Key Generation**: Continuously generates codes for multiple services (Apple TV+, Music, Arcade, Fitness+) and stores them for later use
+- **Telegram Bot Interface**: Request codes via Telegram with simple commands
+- **Multi-Service Support**: Generate codes for different Apple services
+- **Code Storage**: Maintains a pool of pre-generated codes for quick access
+- **Anti-Detection Measures**: Uses rotating user agents and private browsing
 
-## Requirements
+## Setup
 
-- Python 3.8+
-- Selenium WebDriver
-- Chrome/Chromium browser
-- Chrome WebDriver
+### Requirements
 
-## Installation
+- Python 3.7+
+- Chrome or Chromium browser
+- Linux/Ubuntu environment (recommended)
 
-### Method 1: Direct Installation
+### Installation
 
-1. Clone this repository
+1. Clone the repository:
+   ```
+   git clone https://github.com/el4abdu/applekeyslinux.git
+   cd applekeyslinux
+   ```
+
 2. Install dependencies:
    ```
-   pip install -r requirements.txt
-   ```
-3. Install Chrome/Chromium and appropriate WebDriver
-
-### Method 2: Using the Setup Script (AWS Linux)
-
-1. Make the setup script executable:
-   ```
-   chmod +x setup_aws.sh
-   ```
-2. Run the setup script:
-   ```
-   ./setup_aws.sh
+   pip3 install -r requirements.txt
    ```
 
-### Method 3: Using Docker
-
-1. Build and run using Docker Compose:
+3. Make the scripts executable:
    ```
-   docker-compose up --build
+   chmod +x *.sh
    ```
 
 ## Usage
 
-### Method 1: Using Python Directly
+### Option 1: Run Both Services Together
 
-```bash
-python app.py --count <number_of_codes> --service <service_name>
+To run both the key generator service and Telegram bot together:
+
+```
+./run_bot_with_generator.sh
 ```
 
-Where:
-- `<number_of_codes>` is the number of redemption codes you want to extract
-- `<service_name>` is one of: tv, music, arcade, fitness, news
+### Option 2: Run Services Separately
 
-### Method 2: Using the Run Script
+1. Start the key generator service in the background:
+   ```
+   ./run_generator_background.sh
+   ```
 
-```bash
-chmod +x run.sh
-./run.sh --count <number_of_codes> --service <service_name>
-```
+2. Start the Telegram bot in a separate terminal:
+   ```
+   ./run_telegram_bot_only.sh
+   ```
 
-### Method 3: Using Docker
+### Telegram Bot Commands
 
-Edit the `docker-compose.yml` file to set the desired count and service, then run:
+Once the bot is running, you can use these commands in Telegram:
 
-```bash
-docker-compose up
-```
+- `/start` - Start the bot and select a service
+- `/help` - Show help message and current code counts
+- `/status` - Show current code counts for all services
+- `/generate [service] [count]` - Generate specific number of codes for a service
+  - Example: `/generate tv 3` to generate 3 Apple TV+ codes
 
-## Available Services
+### Available Services
 
 - `tv` - Apple TV+
 - `music` - Apple Music
 - `arcade` - Apple Arcade
 - `fitness` - Apple Fitness+
-- `news` - Apple News+
-
-## Output
-
-Extracted codes are saved to the `codes/` directory in separate files for each service:
-
-- `tv_plus_codes.txt`
-- `music_codes.txt`
-- `arcade_codes.txt`
-- `fitness_codes.txt`
-- `news_codes.txt`
 
 ## Configuration
 
-Edit the `config.py` file to customize:
-- Target URLs
-- XPath selectors
-- Browser settings
-- Timeouts
-- Output file locations 
+### Telegram Bot Token
+
+The default Telegram bot token is included in the scripts. To use your own token:
+
+```
+export TELEGRAM_TOKEN="your_token_here"
+./run_telegram_bot_only.sh
+```
+
+### User Restrictions
+
+To restrict the bot to specific Telegram user IDs:
+
+```
+export ALLOWED_USERS="user_id_1,user_id_2"
+./run_telegram_bot_only.sh
+```
+
+## Monitoring
+
+- Check `generator.log` for key generator service logs
+- Check `telegram_bot.log` for Telegram bot logs
+
+## Stopping the Services
+
+- To stop the key generator service: `kill $(cat generator.pid)`
+- To stop the Telegram bot: Press Ctrl+C in its terminal
+
+## Troubleshooting
+
+If you encounter issues:
+
+1. Check that Chrome/Chromium is installed
+2. Verify that the correct ChromeDriver is installed
+3. Check the log files for specific error messages
+4. Ensure you have a stable internet connection
+
+## License
+
+This project is for educational purposes only. 

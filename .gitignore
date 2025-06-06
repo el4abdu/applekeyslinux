@@ -24,22 +24,27 @@ var/
 venv/
 ENV/
 
-# Logs
-*.log
-logs/
-
-# Extracted codes
-codes/
-
-# Chrome WebDriver
-chromedriver
-chromedriver.exe
-
-# IDE
+# IDE files
 .idea/
 .vscode/
 *.swp
 *.swo
+
+# Logs
+*.log
+generator.log
+telegram_bot.log
+
+# Generated code files
+codes/
+*.pid
+
+# Chrome driver
+chromedriver
+chromedriver.exe
+
+# Local environment
+.env
 
 # OS specific
 .DS_Store
