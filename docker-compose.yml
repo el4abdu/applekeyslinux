@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  apple-code-extractor:
+    build: .
+    volumes:
+      - ./codes:/app/codes
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: ["--count", "5", "--service", "tv"]
+    # Uncomment and modify the command below to extract codes for other services
+    # command: ["--count", "5", "--service", "music"] 
